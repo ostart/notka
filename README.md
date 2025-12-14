@@ -1,1 +1,1 @@
-VueJS browser app for learn musical notes notation
+A browser application using VueJS for learning musical notation.
