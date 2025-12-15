@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- Background with gradient matching app theme -->
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="100" height="100" fill="url(#bgGradient)"/>
+  
+  <!-- Staff lines (5 lines) -->
+  <line x1="20" y1="30" x2="80" y2="30" stroke="white" stroke-width="2" stroke-linecap="round"/>
+  <line x1="20" y1="40" x2="80" y2="40" stroke="white" stroke-width="2" stroke-linecap="round"/>
+  <line x1="20" y1="50" x2="80" y2="50" stroke="white" stroke-width="2" stroke-linecap="round"/>
+  <line x1="20" y1="60" x2="80" y2="60" stroke="white" stroke-width="2" stroke-linecap="round"/>
+  <line x1="20" y1="70" x2="80" y2="70" stroke="white" stroke-width="2" stroke-linecap="round"/>
+  
+  <!-- Musical note (eighth note) - more realistic appearance -->
+  <!-- Note head (filled, slightly angled oval) -->
+  <ellipse cx="48" cy="58" rx="8" ry="6" fill="white" transform="rotate(-20 48 58)"/>
+  <!-- Note stem (vertical line) -->
+  <line x1="54" y1="36" x2="54" y2="58" stroke="white" stroke-width="3.5" stroke-linecap="round"/>
+  <!-- Note flag (realistic curved flag) -->
+  <path d="M 54 36 C 61 34, 68 36, 71 40 C 74 44, 72 48, 68 46" stroke="white" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
