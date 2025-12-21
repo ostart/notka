@@ -18,7 +18,7 @@
           class="response-option"
           :class="{
             'drag-over': dragOverIndex === getOptionIndex('left', index),
-            'correct': option.correct && showFeedback,
+            'correct': option.correct && (showFeedback || showCorrectAnswer),
             'incorrect': option.incorrect && showFeedback
           }"
           draggable="true"
@@ -62,7 +62,7 @@
           class="response-option"
           :class="{
             'drag-over': dragOverIndex === getOptionIndex('right', index),
-            'correct': option.correct && showFeedback,
+            'correct': option.correct && (showFeedback || showCorrectAnswer),
             'incorrect': option.incorrect && showFeedback
           }"
           draggable="true"
@@ -120,6 +120,7 @@ export default {
       dragOverIndex: null,
       staffDragOver: false,
       showFeedback: false,
+      showCorrectAnswer: false,
       mistakes: {},
       wrongCount: 0,
       touchStartX: null,
@@ -226,6 +227,7 @@ export default {
       // Generate 4 response options (1 correct + 3 random)
       this.generateResponseOptions()
       this.showFeedback = false
+      this.showCorrectAnswer = false
       
       // Render staff with new note
       this.$nextTick(() => {
@@ -405,11 +407,17 @@ export default {
     },
     handleClickOption(index) {
       // Allow click/tap as alternative to drag and drop
-      if (!this.showFeedback) {
+      // Prevent interaction when showing feedback or correct answer
+      if (!this.showFeedback && !this.showCorrectAnswer) {
         this.checkAnswer(index)
       }
     },
     checkAnswer(index) {
+      // Prevent checking answers when showing feedback or correct answer
+      if (this.showFeedback || this.showCorrectAnswer) {
+        return
+      }
+      
       this.dragOverIndex = null
       const selectedOption = this.responseOptions[index]
       
@@ -444,6 +452,7 @@ export default {
         // Wrong answer - count mistake and keep in dictionary
         selectedOption.incorrect = true
         this.showFeedback = true
+        this.showCorrectAnswer = false
         this.wrongCount++
         
         // Track mistake with note name and octave name (not number)
@@ -460,10 +469,20 @@ export default {
         }
         this.mistakes[noteKey].count++
         
-        // Move to next note after delay
+        // After showing error message, show the correct answer
         setTimeout(() => {
-          this.nextNote()
-        }, 1500)
+          // Find and highlight the correct answer
+          const correctOptionIndex = this.responseOptions.findIndex(opt => opt.id === this.currentNote.id)
+          if (correctOptionIndex !== -1) {
+            this.responseOptions[correctOptionIndex].correct = true
+            this.showCorrectAnswer = true
+          }
+          
+          // Move to next note after showing correct answer
+          setTimeout(() => {
+            this.nextNote()
+          }, 1500)
+        }, 1000)
       }
     }
   }

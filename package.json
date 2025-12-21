@@ -1,6 +1,6 @@
 {
   "name": "notka",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A browser application using VueJS for learning musical notation",
   "scripts": {
     "dev": "vite",
